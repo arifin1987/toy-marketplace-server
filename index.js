@@ -27,6 +27,37 @@ async function run() {
     // Connect the client to the server	(optional starting in v4.7)
     await client.connect();
     // Send a ping to confirm a successful connection
+    const toyCollection = client.db('toyMarket').collection('carCollection');
+    
+    app.get('/', async(req,res)=>{
+      
+      
+      const result = await toyCollection.find().toArray();
+      res.send(result);
+
+    })
+    
+    app.get('/police', async(req,res)=>{
+      console.log(req.query);
+      let query={subcategoryName:"PoliceCars"};
+      const result = await toyCollection.find(query).limit(2).toArray();
+      res.send(result);
+
+    })
+    app.get('/fire', async(req,res)=>{
+      console.log(req.query);
+      let query={subcategoryName:"FireTrucks"};
+      const result = await toyCollection.find(query).limit(2).toArray();
+      res.send(result);
+
+    })
+    app.get('/sports', async(req,res)=>{
+      console.log(req.query);
+      let query={subcategoryName:"SportsCars"};
+      const result = await toyCollection.find(query).limit(2).toArray();
+      res.send(result);
+
+    })
     await client.db("admin").command({ ping: 1 });
     console.log("Pinged your deployment. You successfully connected to MongoDB!");
   } finally {
@@ -37,9 +68,7 @@ async function run() {
 run().catch(console.dir);
 
 
-app.get('/', (req,res)=>{
-    res.send('toy marketplace is running')
-})
+
 
 app.listen(port, ()=>{
     console.log(`toy marketplace is running on port ${port}`)
