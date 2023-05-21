@@ -117,7 +117,9 @@ async function run() {
 run().catch(console.dir);
 
 
-
+app.get('/', (req,res)=>{
+  res.send('toy planet running...')
+})
 
 app.listen(port, ()=>{
     console.log(`toy marketplace is running on port ${port}`)
